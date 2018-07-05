@@ -1,13 +1,15 @@
 /* tslint:disable */
-import * as wasm from './rust_bg';
+import * as wasm from './wasm_rust_bg';
 
-const __wbg_f_log_log_n_target = console.log;
+export function add(arg0, arg1) {
+    return wasm.add(arg0, arg1);
+}
 
-const TextDecoder = typeof self === 'object' && self.TextDecoder
-    ? self.TextDecoder
-    : require('util').TextDecoder;
+const TextEncoder = typeof self === 'object' && self.TextEncoder
+    ? self.TextEncoder
+    : require('util').TextEncoder;
 
-let cachedDecoder = new TextDecoder('utf-8');
+let cachedEncoder = new TextEncoder('utf-8');
 
 let cachegetUint8Memory = null;
 function getUint8Memory() {
@@ -17,21 +19,6 @@ function getUint8Memory() {
     return cachegetUint8Memory;
 }
 
-function getStringFromWasm(ptr, len) {
-    return cachedDecoder.decode(getUint8Memory().subarray(ptr, ptr + len));
-}
-
-export function __wbg_f_log_log_n(arg0, arg1) {
-    let varg0 = getStringFromWasm(arg0, arg1);
-    __wbg_f_log_log_n_target(varg0);
-}
-
-const TextEncoder = typeof self === 'object' && self.TextEncoder
-    ? self.TextEncoder
-    : require('util').TextEncoder;
-
-let cachedEncoder = new TextEncoder('utf-8');
-
 function passStringToWasm(arg) {
 
     const buf = cachedEncoder.encode(arg);
@@ -40,25 +27,14 @@ function passStringToWasm(arg) {
     return [ptr, buf.length];
 }
 
-export function greet(arg0) {
-    const [ptr0, len0] = passStringToWasm(arg0);
-    try {
-        return wasm.greet(ptr0, len0);
-    } finally {
-        wasm.__wbindgen_free(ptr0, len0 * 1);
-    }
-}
+const TextDecoder = typeof self === 'object' && self.TextDecoder
+    ? self.TextDecoder
+    : require('util').TextDecoder;
 
-export function main() {
-    return wasm.main();
-}
+let cachedDecoder = new TextDecoder('utf-8');
 
-export function add(arg0, arg1) {
-    return wasm.add(arg0, arg1);
-}
-
-export function array_mem() {
-    return wasm.array_mem();
+function getStringFromWasm(ptr, len) {
+    return cachedDecoder.decode(getUint8Memory().subarray(ptr, ptr + len));
 }
 
 let cachedGlobalArgumentPtr = null;
@@ -92,10 +68,10 @@ export function get_name(arg0) {
     }
 }
 
-export function fillter_array(arg0) {
+export function has_name_langth_file_over(arg0) {
     const [ptr0, len0] = passStringToWasm(arg0);
     try {
-        return (wasm.fillter_array(ptr0, len0)) !== 0;
+        return (wasm.has_name_langth_file_over(ptr0, len0)) !== 0;
     } finally {
         wasm.__wbindgen_free(ptr0, len0 * 1);
     }
