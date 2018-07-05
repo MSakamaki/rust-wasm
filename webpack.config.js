@@ -28,12 +28,17 @@ module.exports = {
       {
         test: /\.ts$/,
         use: 'ts-loader'
-      }
+      },
+      //  {
+			// 	test: /\.wasm$/,
+      //   // loaders: ['wasm-loader']
+      //   type: "webassembly/experimental"
+      // }
     ]
   },
   resolve: {
     extensions: [
-      '.ts', '.js',
+      '.ts', '.js', '.wasm'
     ]
   },
   plugins: [
@@ -49,5 +54,6 @@ module.exports = {
   output: {
     filename: '[name].bundle.js',
     path:  config.dist,
+    // publicPath: "/wasm/",
   },
 };

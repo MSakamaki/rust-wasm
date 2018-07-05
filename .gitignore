@@ -2,5 +2,8 @@
 
 /node_modules
 /dist
-/target
+
+
+# rust
+/rust/target
 **/*.rs.bk
